@@ -145,7 +145,7 @@ Extract needs a ComfyUI install that already has:
 
 You can curate datasets without that. Extract stays disabled until Setup is healthy.
 
-Official write-ups:
+Community guides by [malcolmrey](https://huggingface.co/malcolmrey):
 
 - [Creation guide](https://huggingface.co/datasets/malcolmrey/various/blob/main/h3-center/docs/MINIMAX_H3_REFMOD_CREATION_GUIDE.md)
 - [Install & use in ComfyUI](https://huggingface.co/datasets/malcolmrey/various/blob/main/h3-center/docs/MINIMAX_H3_REFMODS_INSTALLATION_AND_USAGE_GUIDE.md)
