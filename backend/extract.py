@@ -167,7 +167,9 @@ def build_argv(
 ) -> list[str]:
     argv = [str(python)]
     if is_embed_python(python):
-        argv.append("-I")
+        # -s skips user site-packages (avoids a conflicting torch) but still
+        # honors PYTHONPATH so Desktop / venv installs can import `comfy`.
+        argv.append("-s")
     mode = str(extract.get("mode") or "encode")
     argv.extend([
         "-u",
@@ -214,6 +216,8 @@ def prepare_extract(
     script = Path(info["extract_script"])
     vae = Path(info["vae_path"])
     output_root = Path(info["output_dir"])
+    comfy_root = Path(info["comfy_root"]) if info.get("comfy_root") else None
+    comfy_source = Path(info["comfy_source"]) if info.get("comfy_source") else comfy_root
     try:
         subfolder = normalize_subfolder(str(manifest.get("subfolder") or ""))
     except ValueError as exc:
@@ -248,7 +252,8 @@ def prepare_extract(
         "manifest": manifest,
         "argv": argv,
         "python": python,
-        "comfy_root": Path(info["comfy_root"]) if info.get("comfy_root") else None,
+        "comfy_root": comfy_root,
+        "comfy_source": comfy_source,
         "output_dir": output_dir,
         "mod_name": mod_name,
         "target": target,
@@ -262,9 +267,16 @@ def _run_process(job: ExtractJob, prepared: dict[str, Any], on_line: Callable[[s
     env = os.environ.copy()
     env["PYTHONUNBUFFERED"] = "1"
     env["PYTHONIOENCODING"] = "utf-8"
+    env["PYTHONNOUSERSITE"] = "1"
     comfy_root = prepared.get("comfy_root")
-    if comfy_root is not None:
-        env["PYTHONPATH"] = str(comfy_root) + os.pathsep + env.get("PYTHONPATH", "")
+    comfy_source = prepared.get("comfy_source") or comfy_root
+    path_parts: list[str] = []
+    if comfy_source is not None:
+        path_parts.append(str(comfy_source))
+    if comfy_root is not None and str(comfy_root) not in path_parts:
+        path_parts.append(str(comfy_root))
+    if path_parts:
+        env["PYTHONPATH"] = os.pathsep.join(path_parts) + os.pathsep + env.get("PYTHONPATH", "")
     kwargs: dict[str, Any] = {
         "args": prepared["argv"],
         "stdout": subprocess.PIPE,
@@ -275,8 +287,9 @@ def _run_process(job: ExtractJob, prepared: dict[str, Any], on_line: Callable[[s
         "bufsize": 1,
         "env": env,
     }
-    if comfy_root is not None:
-        kwargs["cwd"] = str(comfy_root)
+    cwd = comfy_source or comfy_root
+    if cwd is not None:
+        kwargs["cwd"] = str(cwd)
     if os.name == "nt":
         kwargs["creationflags"] = getattr(subprocess, "CREATE_NO_WINDOW", 0)
     proc = subprocess.Popen(**kwargs)

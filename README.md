@@ -37,27 +37,31 @@ Guides:
 
 ```text
 python -m venv .venv
-.venv\Scripts\activate
+.venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
 
 Open the URL it prints (`http://127.0.0.1:8765` or the next free port). Bound to localhost only.
 
-On first launch, open **Setup** and set the ComfyUI root if it was not auto-detected.
+On first launch, open **Setup** and set the ComfyUI root if it was not auto-detected. This studio talks to **any local ComfyUI** — Desktop, Windows portable, Easy-Install, Stability Matrix, or a manual git clone. It does not have to be Easy-Install.
 
-**ComfyUI-Easy-Install** does not use a venv. It ships an embedded interpreter:
+Paste the folder that contains `main.py`, or the wrapper folder that contains a `ComfyUI` subfolder. Leave **Python** blank and Save — the studio fills the interpreter that install actually uses.
 
-```text
-ComfyUI-Easy-Install\
-  python_embeded\python.exe      ← this is the Python to use
-  ComfyUI\                       ← paste this, or the parent folder
-    main.py
-    custom_nodes\
-    models\vae\
-```
+| Install | What to paste | Python (auto-filled if blank) |
+| --- | --- | --- |
+| Windows portable | `ComfyUI_windows_portable` or the inner `ComfyUI` folder | `python_embeded\python.exe` next to `ComfyUI` |
+| Easy-Install | `ComfyUI-Easy-Install` or the inner `ComfyUI` folder | same `python_embeded\python.exe` (there is no venv) |
+| ComfyUI Desktop | the **user data** folder you chose at install (often `Documents\ComfyUI`), not the app under `AppData\Local\Programs` | `.venv\Scripts\python.exe` (macOS/Linux: `.venv/bin/python`) |
+| Stability Matrix / manual venv | the `ComfyUI` folder with `main.py` | `venv` or `.venv` inside that folder |
+| git clone, system/conda Python | the clone folder with `main.py` | browse to the `python` that launches ComfyUI |
 
-Paste either `...\ComfyUI-Easy-Install` or `...\ComfyUI-Easy-Install\ComfyUI`. Leave Python blank and Save — the studio fills `python_embeded\python.exe`. Datasets root can point at this repo’s `datasets/` folder or an existing AI Toolkit datasets directory.
+Extract still needs, inside that install (or on an `extra_model_paths.yaml` search path):
+
+- `custom_nodes/ComfyUI-MiniMaxH3Mod`
+- `models/vae/minimax_h3_video_vae_fp16.safetensors`
+
+RefMods are written to `models/refmods/<folder>/` under the same root. Datasets root can point at this repo’s `datasets/` folder or an existing AI Toolkit datasets directory.
 
 ## ComfyUI
 

@@ -2555,7 +2555,8 @@ function renderInstructions() {
           <li><span class="mono">custom_nodes/ComfyUI-MiniMaxH3Mod</span></li>
           <li><span class="mono">models/vae/minimax_h3_video_vae_fp16.safetensors</span></li>
         </ul>
-        <p><b>ComfyUI-Easy-Install</b> has no venv. Paste the Easy-Install folder or the inner <span class="mono">ComfyUI</span> folder, leave Python blank, and Save — the studio fills <span class="mono">python_embeded\\python.exe</span>.</p>
+        <p>Works with <b>any local ComfyUI</b>: Desktop, Windows portable, Easy-Install, Stability Matrix, or a git clone. Paste the folder with <span class="mono">main.py</span>, or the wrapper that contains a <span class="mono">ComfyUI</span> folder. For Desktop, pick the user data folder (often <span class="mono">Documents\\ComfyUI</span>), not the app under <span class="mono">AppData\\Local\\Programs</span>.</p>
+        <p>Leave Python blank and Save — portable / Easy-Install fill <span class="mono">python_embeded\\python.exe</span>; Desktop / venv fills <span class="mono">.venv</span> or <span class="mono">venv</span>.</p>
         <p>The health chip in the header turns green when extract is ready. Until then you can still build datasets.</p>
       </section>
 
@@ -2666,9 +2667,9 @@ function renderSetup() {
     <div class="toolbar"><h2>Setup</h2></div>
     <div class="layout">
       <section class="side" style="position:static">
-        <p class="meta">Point this at your ComfyUI. <b>ComfyUI-Easy-Install has no venv</b> — pick the <span class="mono">ComfyUI-Easy-Install</span> folder or the inner <span class="mono">ComfyUI</span> folder. Python is <span class="mono">python_embeded\\python.exe</span> next to that ComfyUI folder; leave it blank and Save to auto-fill.</p>
-        <label>ComfyUI root${pickRow("s-comfy", c.comfy_root || h.comfy_root || "", "folder", { title: "ComfyUI folder", placeholder: "ComfyUI-Easy-Install or ComfyUI" })}</label>
-        <label>Python${pickRow("s-py", c.python_path || h.python_path || "", "file", { title: "ComfyUI python.exe", filetypes: [["python.exe", "python.exe"], ["All files", "*.*"]] })}</label>
+        <p class="meta">Point this at <b>any</b> local ComfyUI. Paste the folder with <span class="mono">main.py</span>, or a wrapper such as <span class="mono">ComfyUI_windows_portable</span> / <span class="mono">ComfyUI-Easy-Install</span>. Desktop: pick the user data folder you chose at install (often <span class="mono">Documents\\ComfyUI</span>), not the electron app folder. Leave Python blank and Save to auto-fill <span class="mono">python_embeded</span>, <span class="mono">.venv</span>, or <span class="mono">venv</span>.</p>
+        <label>ComfyUI root${pickRow("s-comfy", c.comfy_root || h.comfy_root || "", "folder", { title: "ComfyUI folder", placeholder: "ComfyUI, portable, Easy-Install, or Desktop data folder" })}</label>
+        <label>Python${pickRow("s-py", c.python_path || h.python_path || "", "file", { title: "Python that launches ComfyUI", filetypes: [["python.exe", "python.exe"], ["python", "python"], ["All files", "*.*"]] })}</label>
         <label>H3 video VAE${pickRow("s-vae", c.vae_path || h.vae_path || "", "file", { title: "MiniMax H3 video VAE", filetypes: [["Safetensors", "*.safetensors"], ["All files", "*.*"]] })}</label>
         <label>extract_mod.py${pickRow("s-script", c.extract_script || h.extract_script || "", "file", { title: "extract_mod.py", filetypes: [["extract_mod.py", "extract_mod.py"], ["Python", "*.py"], ["All files", "*.*"]] })}</label>
         <label>RefMods output${pickRow("s-out", c.output_dir || h.output_dir || "", "folder", { title: "RefMods output folder" })}</label>
@@ -2691,12 +2692,12 @@ function renderSetup() {
       <aside class="side">
         <h3>Health</h3>
         <div>${h.ready ? `<span class="badge ok">ready</span>` : `<span class="badge dirty">blocked</span>`}</div>
-        <div class="meta">Install: ${escapeHtml(h.install_kind || "unknown")} · Device: ${escapeHtml(h.device || "unknown")}${h.pack_version ? ` · MiniMaxH3Mod ${escapeHtml(h.pack_version)}` : ""}</div>
+        <div class="meta">Install: ${escapeHtml(h.install_label || h.install_kind || "unknown")} · Device: ${escapeHtml(h.device || "unknown")}${h.pack_version ? ` · MiniMaxH3Mod ${escapeHtml(h.pack_version)}` : ""}</div>
         ${(h.missing || []).map((m) => `<div class="warn">${escapeHtml(m)}</div>`).join("")}
         <div class="meta">Hugging Face: ${h.hub_ready ? `<span class="badge ok">ready</span> ${escapeHtml(h.hub_repo || "")}` : `<span class="badge dirty">not set</span>`}</div>
         ${(h.hub_missing || []).map((m) => `<div class="warn">${escapeHtml(m)}</div>`).join("")}
         <div class="mono">${escapeHtml((h.probe_detail && h.probe_detail.comfy) || "")}</div>
-        <p class="meta">Install the pack with <span class="mono">git clone https://github.com/Luisacaotica/ComfyUI-MiniMaxH3Mod</span> into <span class="mono">ComfyUI/custom_nodes</span>. Place <span class="mono">minimax_h3_video_vae_fp16.safetensors</span> in <span class="mono">models/vae</span>.</p>
+        <p class="meta">Install the pack with <span class="mono">git clone https://github.com/Luisacaotica/ComfyUI-MiniMaxH3Mod</span> into that install’s <span class="mono">custom_nodes</span>. Place <span class="mono">minimax_h3_video_vae_fp16.safetensors</span> in <span class="mono">models/vae</span> (or another VAE folder listed in <span class="mono">extra_model_paths.yaml</span>).</p>
       </aside>
     </div>
   `;
