@@ -190,9 +190,3 @@ In a MiniMax-H3 workflow:
 Pick the mod you extracted (`identity/sdprompts_minimaxh3_<name>_v1_refmod` after a folder extract). Strength `1.0`, copies `1`. After MiniMaxH3Mod 0.2.x, leave Apply on `constant` / `linear` / `1.0` so stacked stills inject at full strength. Describe the subject in the prompt; there is no `<Subject 1>` trigger on the Apply node — that token lives in the prompt (see Sample Prompts).
 
 Already-extracted datasets that still live in the RefMod root stay there on re-extract. New sets go into a folder so ComfyUI can group them.
-
-## Tests
-
-```text
-pytest
-```
