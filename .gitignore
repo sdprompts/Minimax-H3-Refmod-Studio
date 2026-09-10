@@ -1,0 +1,26 @@
+# Local settings (machine paths, Hugging Face token)
+config.json
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+
+# User data — datasets, thumbs, extracted mods
+datasets/*
+!datasets/.gitkeep
+data/thumbs/*
+!data/thumbs/.gitkeep
+temp/
+*.safetensors
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>H3 RefMod Studio</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="slate">
+    <div class="slate-mark">
+      <span class="slate-prod">MINIMAX H3</span>
+      <h1>RefMod Studio</h1>
+    </div>
+    <nav class="tabs" id="tabs">
+      <a href="#/datasets" data-view="datasets">Datasets</a>
+      <a href="#/library" data-view="library">Library</a>
+      <a href="#/prompts" data-view="prompts">Sample Prompts</a>
+      <a href="#/instructions" data-view="instructions">Instructions</a>
+      <a href="#/setup" data-view="setup">Setup</a>
+    </nav>
+    <div class="health-chip" id="health-chip">checking…</div>
+  </header>
+
+  <div id="banner" class="banner hidden"></div>
+  <main id="app"></main>
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true"></div>
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true"></div>
+
+  <script src="/static/prompts.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
