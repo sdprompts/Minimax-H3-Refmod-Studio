@@ -19,7 +19,7 @@ This does **not** generate video. It only encodes references through the MiniMax
 - **Extract** — Full Reference (`encode`) or Compressed Reference (`training`), live progress + log, overwrite or bump `_v2`
 - **Library** — ComfyUI `models/refmods/` vs Studio copies next to each dataset; rename folders; **Sync to ComfyUI**
 - **Hugging Face** — upload selected mods to a dataset or model repo, keeping the ComfyUI folder path
-- **Sample prompts** — copy-paste MiniMax-H3 T2VA test shots (face lock, angles, body, light, motion)
+- **Sample prompts** — copy-paste MiniMax-H3 T2VA shots in 5s, 10s, and 15s, one subject, plus R-rated spicy tests
 - **CLI** — `score_refs.py` ranks a folder of stills from the terminal
 
 Extract needs ComfyUI + the MiniMaxH3Mod pack. You can still curate datasets before Setup is healthy.
@@ -32,7 +32,7 @@ Extract needs ComfyUI + the MiniMaxH3Mod pack. You can still curate datasets bef
 | **Dataset sheet** | The stills for one set. Drop files, extract, quality, clean. |
 | **Library → ComfyUI** | What the ComfyUI loader dropdown sees (`models/refmods/`). |
 | **Library → Studio** | Copies kept next to each dataset. Sync / copy / replace into ComfyUI. |
-| **Sample Prompts** | Ready-made `<Subject 1>` test prompts. |
+| **Sample Prompts** | Ready-made `<Subject 1>` T2VA tests in 5s / 10s / 15s. |
 | **Instructions** | In-app guide (same material as below, with jump links). |
 | **Setup** | ComfyUI root, Python, VAE, output folder, datasets root, Hub token. |
 
@@ -132,9 +132,9 @@ On Setup, save a write token and a repo (`user/name`), dataset or model, private
 
 ## Sample prompts
 
-Copy-paste MiniMax-H3 T2VA blocks. Edit the Subject 1 line to the person’s name and wardrobe. Groups cover face lock, angles, body, light, wardrobe, and stress tests.
+Copy-paste MiniMax-H3 T2VA blocks sized for **5s, 10s, and 15s**. One main subject. Edit the Subject 1 line to the person’s name and wardrobe. Match the same duration on the H3 sampler — later shot timestamps stay inside that length.
 
-Use `<Subject 1>`, not `<Picture 1>`. Prompt shape: `subject_definitions`, then `integrated_multimodal_description`, `overall_soundscape`, `non_diegetic_music`.
+Use `<Subject 1>`, not `<Picture 1>`. Prompt shape: `subject_definitions`, then `integrated_multimodal_description`, `overall_soundscape`, `non_diegetic_music`. Spicy is R-rated (lingerie, undressing, implied heat), not explicit.
 
 ## Prerequisites
 

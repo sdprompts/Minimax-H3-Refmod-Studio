@@ -2423,7 +2423,7 @@ function renderPrompts() {
   const q = (state.promptQuery || "").trim().toLowerCase();
   const indexed = SAMPLE_PROMPTS.map((p, i) => ({ p, i })).filter(({ p }) => {
     if (!q) return true;
-    return `${p.group} ${p.title} ${p.tests}`.toLowerCase().includes(q);
+    return `${p.group} ${p.title} ${p.tests} ${p.text}`.toLowerCase().includes(q);
   });
   const groups = [];
   for (const { p } of indexed) {
@@ -2461,9 +2461,9 @@ function renderPrompts() {
       <div class="toolbar">
         <h2>Sample Prompts</h2>
         <span class="meta">${indexed.length} of ${SAMPLE_PROMPTS.length}</span>
-        <input class="search" id="prompt-search" placeholder="Search prompts" value="${escapeHtml(state.promptQuery || "")}">
+        <input class="search" id="prompt-search" placeholder="Search 5s, 10s, spicy, rooftop…" value="${escapeHtml(state.promptQuery || "")}">
       </div>
-      <p class="lede">Edit the Subject 1 line to the person’s name and wardrobe.</p>
+      <p class="lede">5s, 10s, and 15s T2VA blocks, one main subject. Match that duration in ComfyUI. Edit the Subject 1 line to the person’s name and wardrobe. Spicy is R-rated, not explicit.</p>
       <nav class="guide-toc" id="prompt-toc">${toc}</nav>
       ${empty}
     </div>
@@ -2539,7 +2539,7 @@ function renderInstructions() {
           </article>
           <article class="guide-tile">
             <h3>Sample Prompts</h3>
-            <p>Copy-paste shots to test likeness: close-ups, angles, wardrobe, light, and motion.</p>
+            <p>Copy-paste 5s, 10s, and 15s T2VA tests with one subject. Spicy is R-rated, not explicit.</p>
           </article>
           <article class="guide-tile">
             <h3>Setup</h3>
@@ -2622,12 +2622,12 @@ function renderInstructions() {
         <h3>Use in ComfyUI</h3>
         <p>In a MiniMax-H3 workflow:</p>
         <p class="mono">Load H3 RefMods → Apply H3 RefMod (between conditioning and the guider)</p>
-        <p>Copy ready-made test shots from the <a href="#/prompts">Sample Prompts</a> tab.</p>
+        <p>Copy ready-made 5s / 10s / 15s shots from the <a href="#/prompts">Sample Prompts</a> tab and set the same duration on the H3 sampler.</p>
         <ul>
           <li>Pick the extracted mod, e.g. <span class="mono">identity/sdprompts_minimaxh3_&lt;name&gt;_v1_refmod</span>.</li>
           <li>Strength <span class="mono">1.0</span>, copies <span class="mono">1</span>.</li>
           <li>On MiniMaxH3Mod 0.2.x+, leave Apply on <span class="mono">constant</span> / <span class="mono">linear</span> / <span class="mono">1.0</span>.</li>
-          <li>T2VA prompts: <span class="mono">subject_definitions</span>, then <span class="mono">integrated_multimodal_description</span>, <span class="mono">overall_soundscape</span>, <span class="mono">non_diegetic_music</span>. Use <span class="mono">&lt;Subject 1&gt;</span>, not <span class="mono">&lt;Picture 1&gt;</span>. Copy tests from <a href="#/prompts">Sample Prompts</a>.</li>
+          <li>T2VA prompts: <span class="mono">subject_definitions</span>, then <span class="mono">integrated_multimodal_description</span>, <span class="mono">overall_soundscape</span>, <span class="mono">non_diegetic_music</span>. Use <span class="mono">&lt;Subject 1&gt;</span>, not <span class="mono">&lt;Picture 1&gt;</span>. Copy tests from <a href="#/prompts">Sample Prompts</a>. Match clip length to the prompt group (5, 10, or 15 seconds). Later shot timestamps stay inside that length.</li>
         </ul>
         <p>A healthy RefMod is about <b>1.1–1.6 MB</b>. Under ~100 KB usually means encode failed.</p>
       </section>
